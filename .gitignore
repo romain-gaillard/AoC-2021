@@ -1,0 +1,16 @@
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+*.DS_Store
+
+.idea
+*.iml
+
+/web-app/WEB-INF
+build/
+*.[oa]
+*.pyc
+
+*.txt
+*.log
