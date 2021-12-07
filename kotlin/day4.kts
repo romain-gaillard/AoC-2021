@@ -89,6 +89,8 @@ for(i in 2 until lines.size) {
     }
 }
 
+println(boards.size)
+
 // Play
 var foundWinning = false
 for(number in drawnNumbers) {
