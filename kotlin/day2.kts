@@ -1,6 +1,6 @@
 import java.io.File
 
-val fileName = if(args.size > 0) args[0] else "day2.txt"
+val fileName = if (args.size > 0) args[0] else "day2.txt"
 
 // For part 1
 var hPos = 0L
@@ -15,7 +15,7 @@ File(fileName).forEachLine {
     val command = it.split(" ")[0]
     val arg = it.split(" ")[1].toInt()
 
-    when(command) {
+    when (command) {
         "forward" -> {
             // Part 1
             hPos += arg

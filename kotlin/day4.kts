@@ -7,7 +7,7 @@ class Board {
     fun addRow(row: String): Unit {
         val entries = row.trim().replace("\\s+".toRegex(), " ").split(" ")
 
-        for(i in entries.indices) {
+        for (i in entries.indices) {
             cells[currentRow][i] = entries[i].toInt()
         }
 
@@ -16,26 +16,26 @@ class Board {
 
     fun isComplete(): Boolean {
         // Check rows
-        for(i in 0 until cells.size) {
+        for (i in 0 until cells.size) {
             var fullRow = true
-            for(j in 0 until cells[i].size) {
-                if(cells[i][j] != -1)
+            for (j in 0 until cells[i].size) {
+                if (cells[i][j] != -1)
                     fullRow = false
             }
 
-            if(fullRow)
+            if (fullRow)
                 return true
         }
 
         // Check columns
-        for(j in 0 until cells[0].size) {
+        for (j in 0 until cells[0].size) {
             var fullColumn = true
-            for(i in 0 until cells.size) {
-                if(cells[i][j] != -1)
+            for (i in 0 until cells.size) {
+                if (cells[i][j] != -1)
                     fullColumn = false
             }
 
-            if(fullColumn)
+            if (fullColumn)
                 return true
         }
 
@@ -43,9 +43,9 @@ class Board {
     }
 
     fun playNumber(number: Int): Unit {
-        for(i in 0 until cells.size) {
-            for(j in 0 until cells[i].size) {
-                if(cells[i][j] == number)
+        for (i in 0 until cells.size) {
+            for (j in 0 until cells[i].size) {
+                if (cells[i][j] == number)
                     cells[i][j] = -1
             }
         }
@@ -54,9 +54,9 @@ class Board {
 
     fun computeScore(): Int {
         var score = 0
-        for(i in 0 until cells.size) {
-            for(j in 0 until cells[i].size) {
-                if(cells[i][j] != -1)
+        for (i in 0 until cells.size) {
+            for (j in 0 until cells[i].size) {
+                if (cells[i][j] != -1)
                     score += cells[i][j]
             }
         }
@@ -65,7 +65,7 @@ class Board {
     }
 }
 
-val fileName = if(args.size > 0) args[0] else "day4.txt"
+val fileName = if (args.size > 0) args[0] else "day4.txt"
 val lines = File(fileName).readLines()
 
 val drawnNumbers = lines[0].split(",")
@@ -75,13 +75,13 @@ var currentBoard = Board()
 var boards = mutableListOf<Board>()
 
 // Create boards
-for(i in 2 until lines.size) {
+for (i in 2 until lines.size) {
     val line = lines[i]
-    if(!line.isBlank()) {
+    if (!line.isBlank()) {
         currentBoard.addRow(line)
 
         currentRow++
-        if(currentRow == 5) {
+        if (currentRow == 5) {
             boards.add(currentBoard)
             currentBoard = Board()
             currentRow = 0
@@ -89,24 +89,20 @@ for(i in 2 until lines.size) {
     }
 }
 
-println(boards.size)
-
 // Play
 var foundWinning = false
-for(number in drawnNumbers) {
+for (number in drawnNumbers) {
     boards.map { it.playNumber(number.toInt()) }
 
     val fullBoards = boards.filter { it.isComplete() }
 
     // We assume only one board wins at a time (at least for the first and the last to win)
-    if(fullBoards.size == 1) {
+    if (fullBoards.size == 1) {
         // Check if it's the first board to win
-        if(!foundWinning) {
+        if (!foundWinning) {
             println(fullBoards[0].computeScore() * number.toInt())
             foundWinning = true
-        }
-        // Check if it's the last board to win
-        else if(boards.size == 1) {
+        } else if (boards.size == 1) {  // Check if it's the last board to win
             println(fullBoards[0].computeScore() * number.toInt())
         }
     }

@@ -2,15 +2,15 @@ import java.io.File
 
 fun countCharsInCommon(a: String, b: String): Int {
     var counter = 0
-    for(c in a) {
-        if(c in b)
+    for (c in a) {
+        if (c in b)
             counter++
     }
 
     return counter
 }
 
-val fileName = if(args.size > 0) args[0] else "day8.txt"
+val fileName = if (args.size > 0) args[0] else "day8.txt"
 
 var partOne = 0
 var partTwo = 0
@@ -49,38 +49,36 @@ File(fileName).forEachLine {
     digitStr[8] = inputsAndOutputs.filter { it.length == 7 }[0]
 
     // Case for 2, 3, 5 - contain 6 segments
-    for(currentDigit in inputsAndOutputs.filter { it.length == 6 }) {
-        if(countCharsInCommon(currentDigit, digitStr[7]) == 3) {
+    for (currentPattern in inputsAndOutputs.filter { it.length == 6 }) {
+        if (countCharsInCommon(currentPattern, digitStr[7]) == 3) {
             // It's a 0 or a 9
-            if(countCharsInCommon(currentDigit, digitStr[4]) == 4) {
-                digitStr[9] = currentDigit
+            if (countCharsInCommon(currentPattern, digitStr[4]) == 4) {
+                digitStr[9] = currentPattern
+            } else  {
+                digitStr[0] = currentPattern
             }
-            else  {
-                digitStr[0] = currentDigit
-            }
-        }
-        else {
-            digitStr[6] = currentDigit
+        } else {
+            digitStr[6] = currentPattern
         }
     }
 
     // Case for 2, 3, 5 - contain 5 segments
-    for(currentDigit in inputsAndOutputs.filter { it.length == 5 }) {
-        if (countCharsInCommon(currentDigit, digitStr[4]) == 3) {
+    for (currentPattern in inputsAndOutputs.filter { it.length == 5 }) {
+        if (countCharsInCommon(currentPattern, digitStr[4]) == 3) {
             // It's a 3 or a 5
-            if (countCharsInCommon(currentDigit, digitStr[1]) == 2) {
-                digitStr[3] = currentDigit
+            if (countCharsInCommon(currentPattern, digitStr[1]) == 2) {
+                digitStr[3] = currentPattern
             } else {
-                digitStr[5] = currentDigit
+                digitStr[5] = currentPattern
             }
         } else {
-            digitStr[2] = currentDigit
+            digitStr[2] = currentPattern
         }
     }
 
     // Map each character of the signal pattern to the correspondig digit, build a string containing the number
     // And then, convert that to an Int
-    partTwo += outputs.map { digitStr.indexOf(it) }.joinToString("","", "").toInt(10)
+    partTwo += outputs.map { digitStr.indexOf(it) }.joinToString("","", "").toInt()
 }
 
 println(partOne)

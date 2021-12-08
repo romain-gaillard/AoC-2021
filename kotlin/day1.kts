@@ -1,19 +1,19 @@
 import java.io.File
 
-val fileName = if(args.size > 0) args[0] else "day1.txt"
+val fileName = if (args.size > 0) args[0] else "day1.txt"
 val lines = File(fileName).readLines().map { it.toInt() }
 
 var nbIncreases = 0
 var nbIncreasesWindow = 0
 
-for(i in lines.indices) {
-    if(i > 0) {
-        if(lines[i] > lines[i - 1])
+for (i in lines.indices) {
+    if (i > 0) {
+        if (lines[i] > lines[i - 1])
             nbIncreases++
     }
 
-    if(i > 2) {
-        if(lines[i] + lines[i - 1] + lines[i - 2] > lines[i - 1] + lines[i - 2] + lines[i - 3])
+    if (i > 2) {
+        if (lines[i] + lines[i - 1] + lines[i - 2] > lines[i - 1] + lines[i - 2] + lines[i - 3])
             nbIncreasesWindow++
     }
 }
