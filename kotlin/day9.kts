@@ -62,7 +62,7 @@ val lines = File(fileName).readLines().map{ it.map { Character.getNumericValue(i
 
 // Part 1
 var risk = 0
-var lowPoints = mutableListOf<Pair<Int, Int>>()
+val lowPoints = mutableListOf<Pair<Int, Int>>()
 for (i in lines.indices) {
     for (j in lines[i].indices) {
         risk += calculateRisk(lines, i, j, lowPoints)
