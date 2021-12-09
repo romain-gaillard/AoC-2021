@@ -36,12 +36,12 @@ fun calculateBasinSize(map: List<List<Int>>, x: Int, y: Int, visited: MutableLis
 
     visited.add(Pair(x, y))
 
-    if(x < 0 || x >= map.size)
+    if (x < 0 || x >= map.size)
         return 0
-    if(y < 0 || y >= map[x].size)
+    if (y < 0 || y >= map[x].size)
         return 0
 
-    if(map[x][y] == 9)
+    if (map[x][y] == 9)
         return 0
 
     // UP
@@ -71,9 +71,9 @@ for (i in lines.indices) {
 
 
 // Part 2
-var basins = mutableListOf<Int>()
-var visited = mutableListOf<Pair<Int, Int>>()
-for(point in lowPoints) {
+val basins = mutableListOf<Int>()
+val visited = mutableListOf<Pair<Int, Int>>()
+for (point in lowPoints) {
     basins.add(calculateBasinSize(lines, point.first, point.second, visited))
 }
 
