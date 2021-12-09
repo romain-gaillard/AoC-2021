@@ -25,7 +25,7 @@ fun simulateUntil(population: Map<Int, Long>, days: Int): Map<Int, Long> {
     return nextPopulation
 }
 
-val fileName = if (args.size > 0) args[0] else "day6.txt"
+val fileName = if (args.size > 0) args[0] else "day06.txt"
 val lines = File(fileName).readLines()
 
 // Convert the comma-separated  list of lanternfish counters to a frequency map <Int, Long>

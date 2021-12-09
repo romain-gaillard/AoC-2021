@@ -65,7 +65,7 @@ class Board {
     }
 }
 
-val fileName = if (args.size > 0) args[0] else "day4.txt"
+val fileName = if (args.size > 0) args[0] else "day04.txt"
 val lines = File(fileName).readLines()
 
 val drawnNumbers = lines[0].split(",")

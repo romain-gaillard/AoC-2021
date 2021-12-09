@@ -10,7 +10,7 @@ fun countCharsInCommon(a: String, b: String): Int {
     return counter
 }
 
-val fileName = if (args.size > 0) args[0] else "day8.txt"
+val fileName = if (args.size > 0) args[0] else "day08.txt"
 
 var partOne = 0
 var partTwo = 0

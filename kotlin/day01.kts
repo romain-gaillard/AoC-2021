@@ -1,6 +1,6 @@
 import java.io.File
 
-val fileName = if (args.size > 0) args[0] else "day1.txt"
+val fileName = if (args.size > 0) args[0] else "day01.txt"
 val lines = File(fileName).readLines().map { it.toInt() }
 
 var nbIncreases = 0

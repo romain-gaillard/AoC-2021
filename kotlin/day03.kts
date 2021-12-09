@@ -37,7 +37,7 @@ fun filterList(list: MutableList<String>, filterLeastCommon: Boolean): String {
     return list[0]
 }
 
-val fileName = if (args.size > 0) args[0] else "day3.txt"
+val fileName = if (args.size > 0) args[0] else "day03.txt"
 val lines = File(fileName).readLines()
 
 // Part 1

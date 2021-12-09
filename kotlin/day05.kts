@@ -1,6 +1,6 @@
 import java.io.File
 
-val fileName = if (args.size > 0) args[0] else "day5.txt"
+val fileName = if (args.size > 0) args[0] else "day05.txt"
 
 fun computeRange(a: Int, b: Int): IntProgression {
     if (a <= b)
