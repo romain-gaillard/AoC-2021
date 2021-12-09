@@ -71,11 +71,11 @@ for (i in lines.indices) {
 
 
 // Part 2
-var largestBasins = mutableListOf<Int>()
+var basins = mutableListOf<Int>()
 var visited = mutableListOf<Pair<Int, Int>>()
 for(point in lowPoints) {
-    largestBasins.add(calculateBasinSize(lines, point.first, point.second, visited))
+    basins.add(calculateBasinSize(lines, point.first, point.second, visited))
 }
 
 println(risk)
-println(largestBasins.sortedDescending().take(3).reduce { acc, i ->  acc * i })
+println(basins.sortedDescending().take(3).reduce { acc, i ->  acc * i })
