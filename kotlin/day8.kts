@@ -19,7 +19,7 @@ File(fileName).forEachLine {
     var (inputs, outputs) = it.split("|").map { it.trim() }
         .map { it.split(" ")}.map { it.map { it.trim() } }
 
-    // Count the number of signal patterns for 2, 3, 4, and 7 segements
+    // Count the number of signal patterns for 2, 3, 4, and 7 segments
     // (corresponding respectively to digits 1, 7, 4, 8)
     partOne += outputs.filter{ it.length == 2 || it.length == 3 || it.length == 4 || it.length == 7 }.size
 
@@ -27,7 +27,7 @@ File(fileName).forEachLine {
     inputs = inputs.map { it.toCharArray().sorted().joinToString("") }
     outputs = outputs.map { it.toCharArray().sorted().joinToString("") }
 
-    // Building a list containing both inputs and outputs from which we will make the analysis on the
+    // Building a list containing both inputs and outputs on which we will make the analysis of the
     // signal patterns
     val inputsAndOutputs = (inputs + outputs).distinct().toList()
 
