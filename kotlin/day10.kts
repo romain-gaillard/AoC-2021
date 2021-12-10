@@ -4,23 +4,9 @@ import java.util.ArrayDeque
 val fileName = if (args.size > 0) args[0] else "day10.txt"
 val lines = File(fileName).readLines()
 
-var scorePartOneMap = mutableMapOf<Char, Int>()
-scorePartOneMap[')'] = 3
-scorePartOneMap[']'] = 57
-scorePartOneMap['}'] = 1197
-scorePartOneMap['>'] = 25137
-
-var scorePartTwoMap = mutableMapOf<Char, Int>()
-scorePartTwoMap['('] = 1
-scorePartTwoMap['['] = 2
-scorePartTwoMap['{'] = 3
-scorePartTwoMap['<'] = 4
-
-var closingChars = mutableMapOf<Char, Char>()
-closingChars[')'] = '('
-closingChars[']'] = '['
-closingChars['}'] = '{'
-closingChars['>'] = '<'
+var scorePartOneMap = mutableMapOf<Char, Int>(')' to 3, ']' to 57, '}' to 1197, '>' to 25137)
+var scorePartTwoMap = mutableMapOf<Char, Int>('(' to 1, '[' to 2, '{' to 3, '<' to 4)
+var closingChars = mutableMapOf<Char, Char>(')' to '(', ']' to '[', '}' to '{', '>' to '<')
 
 var scorePartOne = 0
 var scoresPartTwo = mutableListOf<Long>()
