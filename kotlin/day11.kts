@@ -91,7 +91,7 @@ while (step <= 100 || stepAllFlashed == 0) {
     if (step <= 100)
         flashesAtStep100 += newFlashes
 
-    if (newFlashes == GRID_HEIGHT * GRID_WIDTH)
+    if (newFlashes == GRID_HEIGHT * GRID_WIDTH && stepAllFlashed == 0)
         stepAllFlashed = step
 
     step++
