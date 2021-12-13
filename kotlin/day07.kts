@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.math.*
 
 val fileName = if (args.size > 0) args[0] else "day07.txt"
 val lines = File(fileName).readLines()
@@ -15,7 +16,7 @@ fun computeFuelConsumption(population: List<Int>, secondPart: Boolean): Int {
         var currentFuelConsumption = 0
 
         for (j in population.indices) {
-            val distance = Math.abs(population[j] - i) + 1
+            val distance = abs(population[j] - i) + 1
             // The key to do the second part quickly was just to notice that we can use the formula
             // n*(n-1)/2 to have the sum of the first n integers
             val cost = if (!secondPart) distance else distance*(distance-1)/2

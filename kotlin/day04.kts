@@ -1,8 +1,8 @@
 import java.io.File
 
 class Board {
-    var cells = Array(5) {Array(5) {0} }
-    var currentRow = 0
+    private var cells = Array(5) {Array(5) {0} }
+    private var currentRow = 0
 
     fun addRow(row: String): Unit {
         val entries = row.trim().replace("\\s+".toRegex(), " ").split(" ")

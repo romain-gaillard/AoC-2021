@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.math.*
 
 val fileName = if (args.size > 0) args[0] else "day05.txt"
 
@@ -32,7 +33,7 @@ File(fileName).forEachLine {
     } else {
         val xIncr = if (x2 > x1) 1 else -1
         val yIncr = if (y2 > y1) 1 else -1
-        val length = Math.abs(x2 - x1)
+        val length = abs(x2 - x1)
 
         var currentX = x1
         var currentY = y1
