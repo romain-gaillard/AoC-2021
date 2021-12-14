@@ -19,7 +19,7 @@ fun computeFuelConsumption(population: List<Int>, secondPart: Boolean): Int {
             val distance = abs(population[j] - i) + 1
             // The key to do the second part quickly was just to notice that we can use the formula
             // n*(n-1)/2 to have the sum of the first n integers
-            val cost = if (!secondPart) distance else distance*(distance-1)/2
+            val cost = if (!secondPart) distance else (distance * (distance - 1)/2)
 
             currentFuelConsumption += cost
         }
