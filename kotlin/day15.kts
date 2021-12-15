@@ -45,6 +45,8 @@ fun findShortestPath(grid: MutableList<MutableList<Int>>, nbTiles: Int): Int {
     var source = Pair<Int, Int>(0, 0)
     var destination = Pair<Int, Int>(0, 0)
 
+    // It's was obviously not the best idea to just duplicate the grid content
+    // Instead, the algorithm should be adapted to calculate the correct weights on the fly
     if (nbTiles > 1) {
         // We duplicate the entries on each row
         for (y in grid.indices) {
