@@ -40,10 +40,6 @@ fun addNeighbours(edges: MutableMap<Pair<Int, Int>, MutableList<Edge>>, vertex: 
     addNeighbour(edges, vertex, bottomNeighbour, grid)
 }
 
-val fileName = if (args.size > 0) args[0] else "day15.txt"
-
-var grid = File(fileName).readLines().map { it.toList().map { Character.getNumericValue(it) } }
-
 fun findShortestPath(grid: MutableList<MutableList<Int>>, nbTiles: Int): Int {
     var edges = mutableMapOf<Pair<Int, Int>, MutableList<Edge>>()
     var source = Pair<Int, Int>(0, 0)
@@ -113,6 +109,9 @@ fun findShortestPath(grid: MutableList<MutableList<Int>>, nbTiles: Int): Int {
     return distances.getOrDefault(destination, Int.MAX_VALUE)
 }
 
+val fileName = if (args.size > 0) args[0] else "day15.txt"
+
+val grid = File(fileName).readLines().map { it.toList().map { Character.getNumericValue(it) } }
 
 println(findShortestPath(grid.map { it.toMutableList() }.toMutableList(), 1))
 println(findShortestPath(grid.map { it.toMutableList() }.toMutableList(), 5))
