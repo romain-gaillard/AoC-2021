@@ -5,16 +5,7 @@ class Edge(val sourceVertex: Pair<Int, Int>, val destinationVertex: Pair<Int, In
 }
 
 fun isValidVertex(vertex: Pair<Int, Int>, height: Int, width: Int): Boolean {
-    if (vertex.first < 0)
-        return false
-    if (vertex.first >= width)
-        return false
-    if (vertex.second < 0)
-        return false
-    if (vertex.second >= height)
-        return false
-
-    return true
+    return (vertex.first >= 0 && vertex.first < width && vertex.second > 0 && vertex.second < height)
 }
 
 fun addNeighbour(edges: MutableMap<Pair<Int, Int>, MutableList<Edge>>, vertex: Pair<Int, Int>,
