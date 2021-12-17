@@ -1,5 +1,6 @@
 import java.io.File
 import kotlin.math.max
+import kotlin.math.abs
 
 class Area(val x1: Int, val x2: Int, val y1: Int, val y2: Int) {
 }
@@ -14,7 +15,7 @@ fun shoot(xInitialVel: Int, yInitialVel: Int, targetArea: Area): Pair<Boolean, I
     var maxY = 0
 
     // Perform another step until be are below the target area
-    while (currentY >= targetArea.y2) {
+    while (currentY >= targetArea.y1 || currentY >= targetArea.y2) {
         currentX += xVel
         currentY += yVel
 
@@ -25,8 +26,8 @@ fun shoot(xInitialVel: Int, yInitialVel: Int, targetArea: Area): Pair<Boolean, I
         maxY = max(maxY, currentY)
 
         // Check if we are in the target area
-        if (targetArea.x1 <= currentX && currentX <= targetArea.x2
-            && targetArea.y1 <= currentY && currentY <= targetArea.y2) {
+        if (targetArea.x1 <= currentX && currentX <= targetArea.x2 &&
+            targetArea.y1 <= currentY && currentY <= targetArea.y2) {
             return Pair(true, maxY)
         }
     }
@@ -43,12 +44,11 @@ val (areaY1, areaY2) = areaStr[1].replace("y=", "").split("..").map { it.toInt()
 val targetArea = Area(areaX1, areaX2, areaY1, areaY2)
 var maxY = 0
 var successes = 0
-val maxRange = 250 // Arbitrarily increased until my solution was correct :s
 
-for (x in 0..maxRange) {
-    for (y in -maxRange..maxRange) {
+for (x in 0..max(areaX1, areaX2)) {
+    for (y in -(max(abs(areaY1), abs(areaY2)))..max(abs(areaY1), abs(areaY2))) {
         val result = shoot(x, y, targetArea)
-        if(result.first) {
+        if (result.first) {
             successes++
             maxY = max(maxY, result.second)
         }
