@@ -1,3 +1,4 @@
+@file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 import kotlinx.serialization.json.*
 import java.io.File
 import kotlin.math.max
@@ -138,15 +139,15 @@ fun buildMathPairHelper(element: JsonArray, parent: MathPair?): MathPair {
 fun updateSuccessor(node: MathPair, value: Int) {
     var parent = node.parent
     var currentNode = node
-    while (parent != null && currentNode == parent.rightPair) {
-        currentNode = parent
-        parent = parent.parent
+    while (parent != null && currentNode == parent!!.rightPair) {
+        currentNode = parent!!
+        parent = parent!!.parent
     }
 
     if (parent == null)
         return
 
-    currentNode = parent
+    currentNode = parent!!
 
     if (currentNode.isRightAValue()) {
         currentNode.setRight(currentNode.rightValue + value)
@@ -164,15 +165,15 @@ fun updateSuccessor(node: MathPair, value: Int) {
 fun updatePredecessor(node: MathPair, value: Int) {
     var parent = node.parent
     var currentNode = node
-    while (parent != null && currentNode == parent.leftPair) {
-        currentNode = parent
-        parent = parent.parent
+    while (parent != null && currentNode == parent!!.leftPair) {
+        currentNode = parent!!
+        parent = parent!!.parent
     }
 
     if (parent == null)
         return
 
-    currentNode = parent
+    currentNode = parent!!
 
     if (currentNode.isLeftAValue()) {
         currentNode.setLeft(currentNode.leftValue + value)
@@ -278,3 +279,5 @@ fun magnitude(pair: MathPair): Int {
 
     return 3 * magnitude(pair.leftPair!!) + 2 * magnitude(pair.rightPair!!)
 }
+
+main(args)
