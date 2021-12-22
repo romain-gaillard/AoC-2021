@@ -77,7 +77,7 @@ fun part2Aux(player1Position: Int, player2Position: Int, player1Score: Int, play
 
                 val currentResult = part2Aux(nextPlayer1Position, nextPlayer2Position, nextPlayer1Score,
                     nextPlayer2Score, !player1Plays, states)
-                
+
                 result = Pair(result.first + currentResult.first, result.second + currentResult.second)
             }
         }
