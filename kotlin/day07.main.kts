@@ -1,7 +1,7 @@
 import java.io.File
 import kotlin.math.*
 
-val fileName = if (args.size > 0) args[0] else "day07.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day07.txt"
 val lines = File(fileName).readLines()
 
 // Convert the comma-separated list of crabs' horizontal positions to a List of Int

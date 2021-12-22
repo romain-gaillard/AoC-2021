@@ -3,9 +3,9 @@ import java.io.File
 fun findAllPaths(caves: MutableMap<String, MutableList<String>>,
                  canVisitASmallCaveTwice: Boolean): MutableList<MutableList<String>> {
 
-    var visited = mutableListOf<String>()
-    var currentPath = mutableListOf<String>()
-    var paths = mutableListOf<MutableList<String>>()
+    val visited = mutableListOf<String>()
+    val currentPath = mutableListOf<String>()
+    val paths = mutableListOf<MutableList<String>>()
 
     visitCave(caves, visited, currentPath, paths,"start", canVisitASmallCaveTwice, false)
 
@@ -31,7 +31,7 @@ fun visitCave(caves: MutableMap<String, MutableList<String>>, visited: MutableLi
     if (currentCave == "end") {
         paths.add(currentPath.toMutableList())
     } else {
-        val adjacentCaves = caves.getOrDefault(currentCave, mutableListOf<String>())
+        val adjacentCaves = caves.getOrDefault(currentCave, mutableListOf())
 
         for (nextCave in adjacentCaves) {
             if (nextCave == "start")
@@ -57,20 +57,20 @@ fun visitCave(caves: MutableMap<String, MutableList<String>>, visited: MutableLi
 }
 
 fun buildGraph(fileName: String): MutableMap<String, MutableList<String>> {
-    var caves = mutableMapOf<String, MutableList<String>>()
+    val caves = mutableMapOf<String, MutableList<String>>()
 
     File(fileName).forEachLine {
-        var (start, end) = it.split("-")
+        val (start, end) = it.split("-")
 
         // Bidirected graph, so we add both start->end and end->start into the list of edges
-        caves.put(start, (caves.getOrDefault(start, mutableListOf()) + end).toMutableList())
-        caves.put(end, (caves.getOrDefault(end, mutableListOf()) + start).toMutableList())
+        caves[start] = (caves.getOrDefault(start, mutableListOf()) + end).toMutableList()
+        caves[end] = (caves.getOrDefault(end, mutableListOf()) + start).toMutableList()
     }
 
     return caves
 }
 
-val fileName = if (args.size > 0) args[0] else "day12.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day12.txt"
 
 // List of edges of the bidirected graph
 var caves = buildGraph(fileName)

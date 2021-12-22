@@ -8,9 +8,9 @@ fun applyToCells(grid: Array<Array<Int>>, transform: (Int) -> Int) {
 
 fun nextStep(grid: Array<Array<Int>>): Int {
     var flashes = 0
-    var flashedThisStep = mutableListOf<Pair<Int, Int>>()
+    val flashedThisStep = mutableListOf<Pair<Int, Int>>()
 
-    applyToCells(grid, { it + 1 })
+    applyToCells(grid) { it + 1 }
 
     var newFlashes: Int
     do {
@@ -18,7 +18,7 @@ fun nextStep(grid: Array<Array<Int>>): Int {
         flashes += newFlashes
     } while(newFlashes > 0)
 
-    applyToCells(grid, { if (it > 9) 0 else it })
+    applyToCells(grid) { if (it > 9) 0 else it }
 
     return flashes
 }
@@ -40,7 +40,7 @@ fun makeOctopusesFlash(grid: Array<Array<Int>>, flashedThisStep: MutableList<Pai
 }
 
 fun updateAdjacents(grid: Array<Array<Int>>, x: Int, y: Int) {
-    var cellsToUpdate = mutableListOf<Pair<Int, Int>>()
+    val cellsToUpdate = mutableListOf<Pair<Int, Int>>()
     cellsToUpdate.add(Pair(x - 1, y)) // Top
     cellsToUpdate.add(Pair(x, y - 1)) // Left
     cellsToUpdate.add(Pair(x + 1, y)) // Down
@@ -50,7 +50,7 @@ fun updateAdjacents(grid: Array<Array<Int>>, x: Int, y: Int) {
     cellsToUpdate.add(Pair(x + 1, y - 1)) // Bottom-left
     cellsToUpdate.add(Pair(x + 1, y + 1)) // Bottom-right
 
-    cellsToUpdate.filter { isInGrid(grid, it.first, it.second) }.forEach() {
+    cellsToUpdate.filter { isInGrid(grid, it.first, it.second) }.forEach {
         grid[it.first][it.second]++
     }
 }
@@ -62,7 +62,7 @@ fun isInGrid(grid: Array<Array<Int>>, x: Int, y: Int): Boolean {
     return true
 }
 
-val fileName = if (args.size > 0) args[0] else "day11.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day11.txt"
 val lines = File(fileName).readLines()
 
 val GRID_HEIGHT = 10
@@ -86,7 +86,7 @@ var flashesAtStep100 = 0
 
 // We simulate new steps until we have an answer for both parts
 while (step <= 100 || stepAllFlashed == 0) {
-    var newFlashes = nextStep(grid)
+    val newFlashes = nextStep(grid)
 
     if (step <= 100)
         flashesAtStep100 += newFlashes

@@ -1,12 +1,12 @@
 import java.io.File
 import java.util.ArrayDeque
 
-val fileName = if (args.size > 0) args[0] else "day10.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day10.txt"
 val lines = File(fileName).readLines()
 
-var scorePartOneMap = mapOf<Char, Int>(')' to 3, ']' to 57, '}' to 1197, '>' to 25137)
-var scorePartTwoMap = mapOf<Char, Int>('(' to 1, '[' to 2, '{' to 3, '<' to 4)
-var closingChars = mapOf<Char, Char>(')' to '(', ']' to '[', '}' to '{', '>' to '<')
+var scorePartOneMap = mapOf(')' to 3, ']' to 57, '}' to 1197, '>' to 25137)
+var scorePartTwoMap = mapOf('(' to 1, '[' to 2, '{' to 3, '<' to 4)
+var closingChars = mapOf(')' to '(', ']' to '[', '}' to '{', '>' to '<')
 
 var scorePartOne = 0
 val scoresPartTwo = mutableListOf<Long>()

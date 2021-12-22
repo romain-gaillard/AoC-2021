@@ -1,6 +1,6 @@
 import java.io.File
 
-val fileName = if (args.size > 0) args[0] else "day02.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day02.txt"
 
 // For part 1
 var hPos = 0L

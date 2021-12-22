@@ -1,15 +1,14 @@
 import java.io.File
 
-class Stream(val content: CharArray, var start: Int, var end: Int, var totalVersion: Long) {
-}
+class Stream(val content: CharArray, var start: Int, var end: Int, var totalVersion: Long)
 
 fun String.toLongIgnorePadding(radix: Int): Long {
     val newString = this.trimStart { it == '0' }
 
-    if (newString.isEmpty())
-        return 0
+    return if (newString.isEmpty())
+        0
     else
-        return newString.toLong(radix)
+        newString.toLong(radix)
 }
 
 fun readLong(stream: Stream, nbBits: Int): Long {
@@ -39,7 +38,7 @@ fun readLiteral(stream: Stream): Long {
 fun readString(stream: Stream, nbBits: Int): String {
     val start = stream.start
     val end = stream.start + nbBits
-    var result = content.slice(start until end).joinToString("")
+    val result = content.slice(start until end).joinToString("")
 
     stream.start = end
 
@@ -113,7 +112,7 @@ fun decodePacket(stream: Stream): Pair<Long, Boolean> {
     return Pair(0, false)
 }
 
-val fileName = if (args.size > 0) args[0] else "day16.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day16.txt"
 
 val content = File(fileName).readLines()[0].map{
     it.toString().toInt(16).toString(2).padStart(4, '0')

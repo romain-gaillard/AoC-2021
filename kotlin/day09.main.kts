@@ -57,7 +57,7 @@ fun calculateBasinSize(map: List<List<Int>>, x: Int, y: Int, visited: MutableLis
     return size + 1
 }
 
-val fileName = if (args.size > 0) args[0] else "day09.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day09.txt"
 val lines = File(fileName).readLines().map{ it.map { Character.getNumericValue(it) } }
 
 // Part 1

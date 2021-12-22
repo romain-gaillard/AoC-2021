@@ -2,8 +2,7 @@ import java.io.File
 import kotlin.math.max
 import kotlin.math.abs
 
-class Area(val x1: Int, val x2: Int, val y1: Int, val y2: Int) {
-}
+class Area(val x1: Int, val x2: Int, val y1: Int, val y2: Int)
 
 fun shoot(xInitialVel: Int, yInitialVel: Int, targetArea: Area): Pair<Boolean, Int> {
     var currentX = 0
@@ -35,7 +34,7 @@ fun shoot(xInitialVel: Int, yInitialVel: Int, targetArea: Area): Pair<Boolean, I
     return Pair(false, 0)
 }
 
-val fileName = if (args.size > 0) args[0] else "day17.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day17.txt"
 
 val areaStr = File(fileName).readLines()[0].replace("target area: ", "").split(", ")
 val (areaX1, areaX2) = areaStr[0].replace("x=", "").split("..").map { it.toInt() }

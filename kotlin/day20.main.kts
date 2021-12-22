@@ -3,19 +3,19 @@ import java.io.File
 fun String.toIntIgnorePadding(radix: Int): Int {
     val newString = this.trimStart { it == '0' }
 
-    if (newString.isEmpty())
-        return 0
+    return if (newString.isEmpty())
+        0
     else
-        return newString.toInt(radix)
+        newString.toInt(radix)
 }
 
 fun getImageSize(image: MutableMap<Pair<Int, Int>, Int>): List<Int> {
-    var x1 = image.minByOrNull { it.key.first }?.key?.first ?:0
-    var x2 = image.maxByOrNull { it.key.first }?.key?.first ?:0
-    var y1 = image.minByOrNull { it.key.second }?.key?.second ?:0
-    var y2 = image.maxByOrNull { it.key.second }?.key?.second ?:0
+    val x1 = image.minByOrNull { it.key.first }?.key?.first ?:0
+    val x2 = image.maxByOrNull { it.key.first }?.key?.first ?:0
+    val y1 = image.minByOrNull { it.key.second }?.key?.second ?:0
+    val y2 = image.maxByOrNull { it.key.second }?.key?.second ?:0
 
-    return listOf<Int>(x1, x2, y1, y2)
+    return listOf(x1, x2, y1, y2)
 }
 
 fun calculateNewPixelValue(inputImage: MutableMap<Pair<Int, Int>, Int>, x: Int, y: Int, default: Int,
@@ -39,11 +39,11 @@ fun calculateNewPixelValue(inputImage: MutableMap<Pair<Int, Int>, Int>, x: Int, 
 
 fun enhance(inputImage: MutableMap<Pair<Int, Int>, Int>, default: Int, enhancementAlgo: String):
         Pair<MutableMap<Pair<Int, Int>, Int>, Int> {
-    var outputImage = mutableMapOf<Pair<Int, Int>, Int>()
+    val outputImage = mutableMapOf<Pair<Int, Int>, Int>()
 
     val (x1, x2, y1, y2) = getImageSize(inputImage)
 
-    // Compute the value of a pixel outside of the main image pattern, to determine the value
+    // Compute the value of a pixel outside the main image pattern, to determine the value
     // of the pixels that will extend infinitely. This will be the new default value of the map
     val newDefault = calculateNewPixelValue(inputImage, x1 - 5, y1 - 5, default, enhancementAlgo)
 
@@ -51,7 +51,7 @@ fun enhance(inputImage: MutableMap<Pair<Int, Int>, Int>, default: Int, enhanceme
         for (j in (x1 - 3)..(x2 + 3)) {
             val newPixel = calculateNewPixelValue(inputImage, j, i, default, enhancementAlgo)
             if (newPixel != newDefault)
-                outputImage.put(Pair(j, i), newPixel)
+                outputImage[Pair(j, i)] = newPixel
         }
     }
 
@@ -71,7 +71,7 @@ fun performSteps(inputImage: MutableMap<Pair<Int, Int>, Int>, enhancementAlgo: S
     return currentImage.values.filter { it == 1 }.size
 }
 
-val fileName = if (args.size > 0) args[0] else "day20.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day20.txt"
 
 var enhancementAlgo = ""
 var inputImage = mutableMapOf<Pair<Int, Int>, Int>()
@@ -87,7 +87,7 @@ File(fileName).forEachLine {
     }
 
     for (i in it.indices) {
-        inputImage.put(Pair(i, rowIndex), if (it[i] == '#') 1 else 0)
+        inputImage[Pair(i, rowIndex)] = if (it[i] == '#') 1 else 0
     }
 
     rowIndex++

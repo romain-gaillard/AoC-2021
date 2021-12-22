@@ -1,18 +1,18 @@
 import java.io.File
 import kotlin.math.*
 
-val fileName = if (args.size > 0) args[0] else "day05.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day05.txt"
 
 fun computeRange(a: Int, b: Int): IntProgression {
-    if (a <= b)
-        return a..b
+    return if (a <= b)
+        a..b
     else
-        return a downTo b
+        a downTo b
 }
 
-fun increaseMapValue(map: HashMap<Pair<Int, Int>, Int>, x: Int, y: Int): Unit {
+fun increaseMapValue(map: HashMap<Pair<Int, Int>, Int>, x: Int, y: Int) {
     val value = map.getOrDefault(Pair(x, y), 0)
-    map.put(Pair(x, y), value + 1)
+    map[Pair(x, y)] = value + 1
 }
 
 var grid = hashMapOf<Pair<Int, Int>, Int>()

@@ -2,11 +2,11 @@ import java.io.File
 import kotlin.math.*
 
 fun permutations(list: List<Int>): List<List<Int>> {
-    var result = mutableListOf<List<Int>>()
+    val result = mutableListOf<List<Int>>()
 
     for (i in 0..5) {
         for (j in 0..7) {
-            result.add(applyTransformation(list, i, j).toMutableList() + mutableListOf<Int>(i, j))
+            result.add(applyTransformation(list, i, j).toMutableList() + mutableListOf(i, j))
         }
     }
 
@@ -38,7 +38,7 @@ fun applyTransformation(list: List<Int>, perm: Int, dir: Int): List<Int> {
     return newList
 }
 
-val fileName = if (args.size > 0) args[0] else "day19.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day19.txt"
 
 var scannerIndex = -1
 val scanners = mutableListOf<MutableList<List<Int>>>()
@@ -48,7 +48,7 @@ File(fileName).forEachLine {
         return@forEachLine
 
     if (it.startsWith("--- ")) {
-        scanners.add(mutableListOf<List<Int>>())
+        scanners.add(mutableListOf())
         scannerIndex++
         return@forEachLine
     }
@@ -68,7 +68,7 @@ while (adding) {
             if (i == j)
                 continue
 
-            if (scannerOffsets.get(Pair(i, j)) == null) {
+            if (scannerOffsets[Pair(i, j)] == null) {
                 var offsets = mutableMapOf<List<Int>, Int>()
 
                 startLoop@for (b in scanners[j].indices) {
@@ -89,7 +89,7 @@ while (adding) {
 
                 offsets = offsets.filter { (_, value) -> value >= 12 }.toMutableMap()
 
-                if(offsets.size > 0) {
+                if(offsets.isNotEmpty()) {
                     val offset = offsets.keys.first()
                     val x = offset[0]
                     val y = offset[1]
@@ -97,11 +97,11 @@ while (adding) {
                     val perm = offset[3]
                     val dir = offset[4]
 
-                    scannerOffsets.put(Pair(i, j), listOf<Int>(x, y, z, perm, dir))
+                    scannerOffsets[Pair(i, j)] = listOf(x, y, z, perm, dir)
 
                     for (b in scanners[j]) {
-                        var newBeacon = applyTransformation(listOf<Int>(b[0], b[1], b[2]), perm, dir)
-                        newBeacon = listOf<Int>(newBeacon[0] + x, newBeacon[1] + y, newBeacon[2] + z)
+                        var newBeacon = applyTransformation(listOf(b[0], b[1], b[2]), perm, dir)
+                        newBeacon = listOf(newBeacon[0] + x, newBeacon[1] + y, newBeacon[2] + z)
 
                         if (!scanners[i].contains(newBeacon)) {
                             scanners[i].add(newBeacon)
@@ -111,7 +111,7 @@ while (adding) {
                     }
                 }
             } else {
-                val offsets = scannerOffsets.get(Pair(i, j))!!
+                val offsets = scannerOffsets[Pair(i, j)]!!
                 val x = offsets[0]
                 val y = offsets[1]
                 val z = offsets[2]
@@ -119,8 +119,8 @@ while (adding) {
                 val dir = offsets[4]
 
                 for (b in scanners[j]) {
-                    var newBeacon = applyTransformation(listOf<Int>(b[0], b[1], b[2]), perm, dir)
-                    newBeacon = listOf<Int>(newBeacon[0] + x, newBeacon[1] + y, newBeacon[2] + z)
+                    var newBeacon = applyTransformation(listOf(b[0], b[1], b[2]), perm, dir)
+                    newBeacon = listOf(newBeacon[0] + x, newBeacon[1] + y, newBeacon[2] + z)
 
                     if (!scanners[i].contains(newBeacon)) {
                         scanners[i].add(newBeacon)
@@ -140,7 +140,7 @@ for (i in 0..scannerIndex) {
         if (i == j)
             continue
 
-        val entry = scannerOffsets.getOrDefault(Pair(i, j), listOf<Int>(0, 0, 0, 0, 0))
+        val entry = scannerOffsets.getOrDefault(Pair(i, j), listOf(0, 0, 0, 0, 0))
         val dist = abs(entry[0]) + abs(entry[1]) + abs(entry[2])
 
         maxDist = max(dist, maxDist)

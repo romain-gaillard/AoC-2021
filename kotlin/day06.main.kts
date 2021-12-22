@@ -1,14 +1,14 @@
 import java.io.File
 
 fun simulateDay(population: Map<Int, Long>): Map<Int, Long> {
-    var nextPopulation = mutableMapOf<Int, Long>()
+    val nextPopulation = mutableMapOf<Int, Long>()
 
     for (i in 8 downTo 0) {
         if ( i > 0) {
-            nextPopulation.put(i - 1, population.getOrDefault(i, 0))
+            nextPopulation[i - 1] = population.getOrDefault(i, 0)
         } else {
-            nextPopulation.put(6, nextPopulation.getOrDefault(6, 0) + population.getOrDefault(0, 0))
-            nextPopulation.put(8, nextPopulation.getOrDefault(8, 0) + population.getOrDefault(0, 0))
+            nextPopulation[6] = nextPopulation.getOrDefault(6, 0) + population.getOrDefault(0, 0)
+            nextPopulation[8] = nextPopulation.getOrDefault(8, 0) + population.getOrDefault(0, 0)
         }
     }
 
@@ -25,7 +25,7 @@ fun simulateUntil(population: Map<Int, Long>, days: Int): Map<Int, Long> {
     return nextPopulation
 }
 
-val fileName = if (args.size > 0) args[0] else "day06.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day06.txt"
 val lines = File(fileName).readLines()
 
 // Convert the comma-separated  list of lanternfish counters to a frequency map <Int, Long>

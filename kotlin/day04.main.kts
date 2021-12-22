@@ -4,7 +4,7 @@ class Board {
     private var cells = Array(5) {Array(5) {0} }
     private var currentRow = 0
 
-    fun addRow(row: String): Unit {
+    fun addRow(row: String) {
         val entries = row.trim().replace("\\s+".toRegex(), " ").split(" ")
 
         for (i in entries.indices) {
@@ -16,7 +16,7 @@ class Board {
 
     fun isComplete(): Boolean {
         // Check rows
-        for (i in 0 until cells.size) {
+        for (i in cells.indices) {
             var fullRow = true
             for (j in 0 until cells[i].size) {
                 if (cells[i][j] != -1)
@@ -30,8 +30,8 @@ class Board {
         // Check columns
         for (j in 0 until cells[0].size) {
             var fullColumn = true
-            for (i in 0 until cells.size) {
-                if (cells[i][j] != -1)
+            for (element in cells) {
+                if (element[j] != -1)
                     fullColumn = false
             }
 
@@ -42,8 +42,8 @@ class Board {
         return false
     }
 
-    fun playNumber(number: Int): Unit {
-        for (i in 0 until cells.size) {
+    fun playNumber(number: Int) {
+        for (i in cells.indices) {
             for (j in 0 until cells[i].size) {
                 if (cells[i][j] == number)
                     cells[i][j] = -1
@@ -54,7 +54,7 @@ class Board {
 
     fun computeScore(): Int {
         var score = 0
-        for (i in 0 until cells.size) {
+        for (i in cells.indices) {
             for (j in 0 until cells[i].size) {
                 if (cells[i][j] != -1)
                     score += cells[i][j]
@@ -65,7 +65,7 @@ class Board {
     }
 }
 
-val fileName = if (args.size > 0) args[0] else "day04.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day04.txt"
 val lines = File(fileName).readLines()
 
 val drawnNumbers = lines[0].split(",")
@@ -77,7 +77,7 @@ var boards = mutableListOf<Board>()
 // Create boards
 for (i in 2 until lines.size) {
     val line = lines[i]
-    if (!line.isBlank()) {
+    if (line.isNotBlank()) {
         currentBoard.addRow(line)
 
         currentRow++

@@ -92,17 +92,17 @@ class MathPair() {
 
     override fun toString(): String {
         var result = "["
-        if (isLeftAValue())
-            result += leftValue.toString()
+        result += if (isLeftAValue())
+            leftValue.toString()
         else
-            result += leftPair.toString()
+            leftPair.toString()
 
         result += ","
 
-        if (isRightAValue())
-            result += rightValue.toString()
+        result += if (isRightAValue())
+            rightValue.toString()
         else
-            result += rightPair.toString()
+            rightPair.toString()
 
         result += "]"
 
@@ -252,10 +252,10 @@ fun reduce(pair: MathPair) {
     var reducing = true
 
     while (reducing) {
-        if (explode(pair, 0))
-            reducing = true
+        reducing = if (explode(pair, 0))
+            true
         else
-            reducing = split(pair)
+            split(pair)
     }
 }
 

@@ -1,6 +1,6 @@
 import java.io.File
 
-val fileName = if (args.size > 0) args[0] else "day14.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day14.txt"
 val lines = File(fileName).readLines()
 
 fun step(polymer: MutableMap<Pair<Char, Char>, Long>, rules: MutableMap<Pair<Char, Char>, Char>):
@@ -53,7 +53,7 @@ lines.forEachIndexed { i, line ->
         lastChar = line.last()
     } else {
         val (left, right) = line.split(" -> ")
-        rules.put(Pair(left[0], left[1]), right[0])
+        rules[Pair(left[0], left[1])] = right[0]
     }
 }
 

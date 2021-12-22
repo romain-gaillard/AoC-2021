@@ -10,7 +10,7 @@ fun countCharsInCommon(a: String, b: String): Int {
     return counter
 }
 
-val fileName = if (args.size > 0) args[0] else "day08.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day08.txt"
 
 var partOne = 0
 var partTwo = 0
@@ -32,7 +32,7 @@ File(fileName).forEachLine {
     val inputsAndOutputs = (inputs + outputs).distinct().toList()
 
     // We'll store the signal patterns that correspond to each digit
-    var digitStr = Array(10 ) { "" }
+    val digitStr = Array(10 ) { "" }
 
     // Note: for all the deductions below, we assume all the 10 digits are always present in an entry
 

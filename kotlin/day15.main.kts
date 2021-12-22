@@ -1,11 +1,10 @@
 import java.io.File
 import java.util.*
 
-class Edge(val sourceVertex: Pair<Int, Int>, val destinationVertex: Pair<Int, Int>, val weight: Int) {
-}
+class Edge(val sourceVertex: Pair<Int, Int>, val destinationVertex: Pair<Int, Int>, val weight: Int)
 
 fun isValidVertex(vertex: Pair<Int, Int>, height: Int, width: Int): Boolean {
-    return (vertex.first >= 0 && vertex.first < width && vertex.second > 0 && vertex.second < height)
+    return (vertex.first in 0 until width && vertex.second > 0 && vertex.second < height)
 }
 
 fun addNeighbour(edges: MutableMap<Pair<Int, Int>, MutableList<Edge>>, vertex: Pair<Int, Int>,
@@ -13,9 +12,9 @@ fun addNeighbour(edges: MutableMap<Pair<Int, Int>, MutableList<Edge>>, vertex: P
 
     if (isValidVertex(neighbour, grid.size, grid[0].size)) {
         val newEdge = Edge(vertex, neighbour, grid[neighbour.second][neighbour.first])
-        val currentEdges = edges.getOrDefault(vertex, mutableListOf<Edge>())
+        val currentEdges = edges.getOrDefault(vertex, mutableListOf())
 
-        edges.put(vertex, (currentEdges + newEdge).toMutableList())
+        edges[vertex] = (currentEdges + newEdge).toMutableList()
     }
 }
 
@@ -32,17 +31,17 @@ fun addNeighbours(edges: MutableMap<Pair<Int, Int>, MutableList<Edge>>, vertex: 
 }
 
 fun findShortestPath(grid: MutableList<MutableList<Int>>, nbTiles: Int): Int {
-    var edges = mutableMapOf<Pair<Int, Int>, MutableList<Edge>>()
-    var source = Pair<Int, Int>(0, 0)
-    var destination = Pair<Int, Int>(0, 0)
+    val edges = mutableMapOf<Pair<Int, Int>, MutableList<Edge>>()
+    var source = Pair(0, 0)
+    var destination = Pair(0, 0)
 
-    // It's was obviously not the best idea to just duplicate the grid content
+    // It was obviously not the best idea to just duplicate the grid content
     // Instead, the algorithm should be adapted to calculate the correct weights on the fly
     if (nbTiles > 1) {
         // We duplicate the entries on each row
         for (y in grid.indices) {
             var currentRow = grid[y].toMutableList()
-            for (t in 1..(nbTiles - 1)) {
+            for (t in 1 until nbTiles) {
                 currentRow = currentRow.map { if (it == 9) 1 else (it + 1) }.toMutableList()
                 grid[y] += currentRow
             }
@@ -50,7 +49,7 @@ fun findShortestPath(grid: MutableList<MutableList<Int>>, nbTiles: Int): Int {
 
         // We duplicate each row
         var currentGrid = grid.toMutableList()
-        for (t in 1..(nbTiles - 1)) {
+        for (t in 1 until nbTiles) {
             currentGrid = currentGrid.map { it.map { if (it == 9) 1 else (it + 1) }.toMutableList() }.toMutableList()
             grid += currentGrid
         }
@@ -74,8 +73,8 @@ fun findShortestPath(grid: MutableList<MutableList<Int>>, nbTiles: Int): Int {
 
     queue.add(Pair(source, 0))
 
-    distances.put(source, 0)
-    verticesDone.put(source, true)
+    distances[source] = 0
+    verticesDone[source] = true
 
     // Perform Dijkstra
     while (!queue.isEmpty()) {
@@ -90,19 +89,19 @@ fun findShortestPath(grid: MutableList<MutableList<Int>>, nbTiles: Int): Int {
                 val distNextVertex = distances.getOrDefault(nextVertex, Int.MAX_VALUE)
                 if (distCurrentVertex + weight < distNextVertex) {
                     val newDistance = distCurrentVertex + weight
-                    distances.put(nextVertex, newDistance)
+                    distances[nextVertex] = newDistance
                     queue.add(Pair(nextVertex, newDistance))
                 }
             }
         }
 
-        verticesDone.put(currentVertex, true)
+        verticesDone[currentVertex] = true
     }
 
     return distances.getOrDefault(destination, Int.MAX_VALUE)
 }
 
-val fileName = if (args.size > 0) args[0] else "day15.txt"
+val fileName = if (args.isNotEmpty()) args[0] else "day15.txt"
 
 val grid = File(fileName).readLines().map { it.toList().map { Character.getNumericValue(it) } }
 
