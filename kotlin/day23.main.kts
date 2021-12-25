@@ -113,7 +113,7 @@ fun costMove(map: MutableMap<Pair<Int, Int>, Amphipod>, source: Pair<Int, Int>, 
     return cost
 }
 
-fun nextMove(map: MutableMap<Pair<Int, Int>, Amphipod>, cost: Int, costs: MutableList<Int>, partTwo: Boolean, states: MutableMap<Set<Pair<Int, Int>>, Int>) {
+fun nextMove(map: MutableMap<Pair<Int, Int>, Amphipod>, cost: Int, costs: MutableList<Int>, partTwo: Boolean) {
     if (costs.size > 0 && cost > costs.first())
         return
     if (isDone(map, partTwo)) {
@@ -121,9 +121,6 @@ fun nextMove(map: MutableMap<Pair<Int, Int>, Amphipod>, cost: Int, costs: Mutabl
         costs.sort()
         for (i in 1 until costs.size)
             costs.removeAt(i)
-
-        states[map.keys.toSet()] = cost
-
         return
     }
 
@@ -155,11 +152,7 @@ fun nextMove(map: MutableMap<Pair<Int, Int>, Amphipod>, cost: Int, costs: Mutabl
                     val newMap = map.toMutableMap()
                     newMap.remove(amphipod.key)
                     newMap[d] = Amphipod(amphipod.value.type, amphipod.value.moves + 1)
-                    if(newMap.keys.toSet() in states) {
-                        val newCost = cost + costMove * costFactor[amphipod.value.type]!! + states[newMap.keys.toSet()]!!
-                        println("Could be faster! " + newCost)
-                    }
-                    nextMove(newMap, cost + costMove * costFactor[amphipod.value.type]!!, costs, partTwo, states)
+                    nextMove(newMap, cost + costMove * costFactor[amphipod.value.type]!!, costs, partTwo)
                 }
             }
         } else {
@@ -169,12 +162,7 @@ fun nextMove(map: MutableMap<Pair<Int, Int>, Amphipod>, cost: Int, costs: Mutabl
                     val newMap = map.toMutableMap()
                     newMap.remove(amphipod.key)
                     newMap[d] = Amphipod(amphipod.value.type, amphipod.value.moves + 1)
-                    if(newMap.keys.toSet() in states) {
-                        if states[newMap.keys.toSet()]!! +
-                        val newCost = cost + costMove * costFactor[amphipod.value.type]!! +
-                        println("Could be faster! " + newCost)
-                    }
-                    nextMove(newMap, cost + costMove * costFactor[amphipod.value.type]!!, costs, partTwo, states)
+                    nextMove(newMap, cost + costMove * costFactor[amphipod.value.type]!!, costs, partTwo)
                 }
             }
         }
@@ -186,12 +174,10 @@ var costs = mutableListOf<Int>()
 
 val fileName = if (args.isNotEmpty()) args[0] else "day23.txt"
 val lines = File(fileName).readLines()
-val states = mutableMapOf<Set<Pair<Int, Int>>, Int>()
 
 parseInput(lines, map, false)
-nextMove(map, 0, costs, false, states)
+nextMove(map, 0, costs, false)
 println(costs.first())
-
 // Part 2 calculated by hand :(
 // This algorithm was way too slow and in the end, I managed to get the answer manually before it even returned
 // Not sure if it can be improved by pruning or if it's just too naive to work for the solution space of part 2
